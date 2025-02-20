@@ -1,38 +1,27 @@
-# Object 1 --> WAP to implement the Perceptron Learning Algorithm using numpy in Python. Evaluate performance of a single perceptron for NAND and XOR truth tables as input dataset.
+# Objective:
+# WAP to implement the Perceptron Learning Algorithm using numpy in Python. 
+# Evaluate performance of a single perceptron for NAND and XOR truth tables as input dataset. 
 
 import numpy as np
 
 class Perceptron:
     def __init__(self, input_size, lr=0.1, epochs=10):
-        """
-        Initialize perceptron with random weights and bias.
-
-        Parameters:
-        input_size (int): Number of input features.
-        lr (float): Learning rate for weight updates.
-        epochs (int): Number of iterations over the dataset.
-        """
-        self.weights = np.random.randn(input_size)  # Random weights
-        self.bias = np.random.randn()  # Random bias
+        # Initialize perceptron with weights and bias equal to 0 for consistency.
+        self.weights = np.zeros(input_size) 
+        self.bias = 0.0  
         self.lr = lr
         self.epochs = epochs
 
     def activation(self, x):
-        """Step function (Threshold at 0)."""
+        # Step function (Threshold at 0).
         return 1 if x >= 0 else 0
 
     def predict(self, x):
-        """Compute weighted sum and apply activation function."""
+        # Compute weighted sum and apply activation function.
         return self.activation(np.dot(x, self.weights) + self.bias)
 
     def train(self, X, y):
-        """
-        Train the perceptron using the perceptron learning rule.
-
-        Parameters:
-        X (numpy array): Input features.
-        y (numpy array): Target labels.
-        """
+        # Train the perceptron using the perceptron learning rule.
         for epoch in range(self.epochs):
             errors = 0
             for i in range(len(X)):
@@ -72,17 +61,23 @@ print("\nTesting Perceptron for XOR Gate:")
 for x in X_XOR:
     print(f"Input: {x}, Predicted Output: {perceptron_xor.predict(x)}")
 
-# Observations:
-# The perceptron should learn NAND successfully since it is linearly separable.
-# However, the perceptron will fail on XOR because XOR is not linearly separable.
+# Explanation:
+# Firstly we assign the perceptron random weights and bias.
+# to predict, we compute the wieghted sum(x.w+b) and apply activation fuction(step function) for y'(predicted output).
+# Now we define the training function of perceptron and predict the output and compute error(y-y')
+# If error!=0 then we make corrections in weights(w += n.(y-y').x) and bias(b += n.(y-y")).
+# We take two datasets as truth tables of NAND and XOR. Then train perceptron and evaluate performance.
+# Perceptron performs accurataly on NAND(linearly separable). 
+# Perceptron does not performs accurataly on XOR(not linearly separable).
 
-#Output :
-'''Training Perceptron for NAND Gate:
-Epoch 1/10, Errors: 2
-Epoch 2/10, Errors: 2
-Epoch 3/10, Errors: 2
-Epoch 4/10, Errors: 0
-Epoch 5/10, Errors: 0
+# Output:
+''' 
+Training Perceptron for NAND Gate:
+Epoch 1/10, Errors: 1
+Epoch 2/10, Errors: 3
+Epoch 3/10, Errors: 3
+Epoch 4/10, Errors: 2
+Epoch 5/10, Errors: 1
 Epoch 6/10, Errors: 0
 Epoch 7/10, Errors: 0
 Epoch 8/10, Errors: 0
@@ -96,19 +91,19 @@ Input: [1 0], Predicted Output: 1
 Input: [1 1], Predicted Output: 0
 
 Training Perceptron for XOR Gate:
-Epoch 1/10, Errors: 2
-Epoch 2/10, Errors: 1
-Epoch 3/10, Errors: 1
-Epoch 4/10, Errors: 1
-Epoch 5/10, Errors: 1
-Epoch 6/10, Errors: 2
-Epoch 7/10, Errors: 2
-Epoch 8/10, Errors: 2
-Epoch 9/10, Errors: 2
-Epoch 10/10, Errors: 2
+Epoch 1/10, Errors: 3
+Epoch 2/10, Errors: 3
+Epoch 3/10, Errors: 4
+Epoch 4/10, Errors: 4
+Epoch 5/10, Errors: 4
+Epoch 6/10, Errors: 4
+Epoch 7/10, Errors: 4
+Epoch 8/10, Errors: 4
+Epoch 9/10, Errors: 4
+Epoch 10/10, Errors: 4
 
 Testing Perceptron for XOR Gate:
-Input: [0 0], Predicted Output: 0
-Input: [0 1], Predicted Output: 0
-Input: [1 0], Predicted Output: 1
-Input: [1 1], Predicted Output: 1'''
+Input: [0 0], Predicted Output: 1
+Input: [0 1], Predicted Output: 1
+Input: [1 0], Predicted Output: 0
+Input: [1 1], Predicted Output: 0'''
